@@ -6,15 +6,12 @@
   <table class="movies">
     <thead>
       <tr>
-        <th class="<%= 'sorted-column' if params[:sort] == 'title' %>">
-          <%= sortable "title", "Title" %> <%= sort_indicator('title') %>
-        </th>
-        <th class="<%= 'sorted-column' if params[:sort] == 'rating' %>">
-          <%= sortable "rating", "Rating" %> <%= sort_indicator('rating') %>
-        </th>
-        <th class="<%= 'sorted-column' if params[:sort] == 'release_date' %>">
-          <%= sortable "release_date", "Release Date" %> <%= sort_indicator('release_date') %>
-        </th>
+        <% ['title', 'rating', 'release_date'].each do |col| %>
+          <th class="<%= 'sorted-column ' + sort_class(col) if params[:sort] == col %>">
+            <%= sortable(col, col.titleize) %> <%= sort_indicator(col) %>
+          </th>
+        <% end %>
+
         <th> </th>
       </tr>
     </thead>
@@ -22,11 +19,13 @@
     <tbody>
       <% @movies.each do |movie| %>
         <tr>
-          <td class="<%= 'sorted-column' if params[:sort] == 'title' %>"><%= movie.title %></td>
-          <td class="<%= 'sorted-column' if params[:sort] == 'rating' %>"><%= movie.rating %></td>
-          <td class="<%= 'sorted-column' if params[:sort] == 'release_date' %>"><%= movie.release_date %></td>
+          <td class="<%= 'sorted-column ' + sort_class('title') if params[:sort] == 'title' %>"><%= movie.title %></td>
+          <td class="<%= 'sorted-column ' + sort_class('rating') if params[:sort] == 'rating' %>"><%= movie.rating %></td>
+          <td class="<%= 'sorted-column ' + sort_class('release_date') if params[:sort] == 'release_date' %>"><%= movie.release_date %></td>
           <td>
-            <%= link_to "Show", movie %> 
+            <%= link_to "Show", movie %> |
+            <%= link_to "Edit", edit_movie_path(movie) %> |
+            <%= link_to "Delete", movie, method: :delete, data: { confirm: "Are you sure?" } %>
           </td>
         </tr>
       <% end %>

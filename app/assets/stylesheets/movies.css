@@ -30,12 +30,12 @@ th, td {
   background-color: #d4e7ec;
 }
 
-th.sorted-column.asc {
+th.sorted-column.asc, td.sorted-column.asc {
   background-color: #d4e7ec;
 }
 
-th.sorted-column.desc {
-  background-color: #cfd1a7;
+th.sorted-column.desc, td.sorted-column.desc {
+  background-color: #dce9ce;
 }
 
 a {
